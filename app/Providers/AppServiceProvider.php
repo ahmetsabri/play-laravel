@@ -6,6 +6,7 @@ use App\Helpers\MyCustomEvent;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Pluralizer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -13,8 +14,6 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Check Length
-     * Must contains capital letters
-     * Must contains symbols letters
      */
     public function register()
     {
@@ -28,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+    //    Pluralizer::useLanguage('turkish');
     }
 }

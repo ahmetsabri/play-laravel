@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 
 class PostController extends Controller
 {
-    public function show(Post $post)
+    public function index()
     {
-        return response()->json(compact('post'));
+        $posts = Post::paginate(1);
+
+        return view('index',compact('posts'));
     }
 
-    public function update(UpdatePostRequest $request, Post $post)
+    public function delete(Post $post)
     {
-        $post->fill($request->validated());
 
-        $post->save();
+        $redirectTo = request()->query('redirect_to',route('home'));
 
-        return response()->json(compact('post'));
+        $post->delete();
+
+        return redirect()->to($redirectTo);
     }
 }

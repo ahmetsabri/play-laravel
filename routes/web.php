@@ -11,21 +11,17 @@
 |
 */
 
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
 Route::get('/', function(){
+    return view('welcome');
+})->name('home');
 
-  echo phpinfo(), php_ini_loaded_file();
-});
+Route::get('posts', [PostController::class,'index'])->name('posts');
 
+Route::get('delete/{post}', [PostController::class,'delete'])->name('delete');
 
-
-Route::get('test', function(Request $request){
-        if (! $request->hasValidSignature()) {
-            abort(404);
-        }
-
-    return 'test';
-})->name('test');

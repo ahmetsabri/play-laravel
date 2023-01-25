@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\TitleWordsCount;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Pluralizer;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 class UpdatePostRequest extends FormRequest
 {
     /**
@@ -13,20 +16,16 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize()
     {
-
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
+
+        // size , allowed keys, nested, custom error message
         return [
-            'title' => 'required',
-            'body' => 'required'
+            'title' => ['required'],
         ];
     }
+
 }

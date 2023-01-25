@@ -2,23 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Casts\HumanDate;
+use App\Casts\HumanDateCast;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $guarded = [];
+    //string ,array, datetime, boolean ,timestamp, decimal, integer, withCasts, Custom cast
 
-    protected $hidden = ['likes'];
+    protected $casts = [
+        'published_at' =>  HumanDateCast::class,
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
+    // public function getTagsAttribute()
+    // {
+    //     return json_decode($this->attributes['tags'],1);
+    // }
 }

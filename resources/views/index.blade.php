@@ -6,61 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js" integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
     <div class="container">
-        <h1 class="center">
-            All Posts
-        </h1>
-  <div class="row">
-    <div class="col s12">
-      <ul class="tabs" id="tabs">
-        <li class="tab col s4"><a class="active"  href="#test1">All Posts ({{$posts->total()}})</a></li>
-        <li class="tab col s4"><a  href="#test2">Active Posts ({{$inactivePostsCount}})</a></li>
-        <li class="tab col s4"><a  href="#test3">inActive Posts ({{$activePostsCount}})</a></li>
-      </ul>
-    </div>
-    <div id="test1" class="col s12">
-    All posts
-
-         <table class="centered">
+        <table>
             <thead>
-              <tr>
-                  <th>Title</th>
-                  <th>Created at</th>
-                  <th>Action</th>
-              </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Action</th>
+                </tr>
             </thead>
-
             <tbody>
 
-        @foreach($posts as $post)
-        <tr>
-            <td>{{$post->title}}</td>
-            <td>{{$post->created_at}}</td>
-            <td>
-                <a class="waves-effect red btn">Delete</a>
-                <a class="waves-effect blue btn">Update</a>
-                <a class="waves-effect waves btn">Show</a>
-            </td>
-          </tr>
-        @endforeach
-        </tbody>
+                @php
+                    $redirectTo = $posts->url($posts->currentPage());
+                    if (!$posts->hasMorePages() && $posts->count() == 1){
+                        $redirectTo = $posts->previousPageUrl();
+                    }
+                @endphp
+                @foreach($posts as $post)
+                <tr>
+                    <td>{{$post->title}}</td>
+                    <td>
+                        <a class="waves-effect waves-light btn info darken-2" href="{{route('delete',[$post,'redirect_to'=>$redirectTo])}}">
+                        delete
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
-        </div>
-
+        {{$posts->links()}}
     </div>
-    <div id="test2" class="col s12">Active Posts</div>
-    <div id="test3" class="col s12">Inactive Posts</div>
-  </div>
-</div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-  <script>
-    let el = document.getElementById('tabs');
-    var instance = M.Tabs.init(el);
-  </script>
 </body>
 </html>

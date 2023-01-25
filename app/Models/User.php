@@ -15,8 +15,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Prunable;
 
-    protected $guarded = [];
-
     protected $casts = [
         'data' => 'array'
     ];
@@ -24,8 +22,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email'
     ];
 
+    public function getJoinAtAttribute(): string
+    {
+        return $this->created_at->diffForHumans();
+    }
 
     public function posts()
     {
@@ -44,7 +47,11 @@ class User extends Authenticatable
 
     public function scopeOrdersCount(Builder $builder,  $min , $max)
     {
-
         $builder->whereBetween('orders',[$min, $max]);
+    }
+
+    public function displayName()
+    {
+        return $this->name;
     }
 }

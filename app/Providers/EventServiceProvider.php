@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         FireTheListener::class => [
             StartJobs::class
+        ],
+        Ok::class => [
+            foo::class
         ]
     ];
 

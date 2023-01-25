@@ -17,14 +17,13 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-        // $users = User::factory(2)->create();
         return [
-            'title' => $this->faker->sentence(rand(2, 3)),
-            'body' => $this->faker->sentence(1000),
+            'user_id' => rand(1,2),
+            'title' => $this->faker->sentence(2),
+            'body' => $this->faker->sentence(3),
             'likes' => random_int(1, 10),
             'dislikes' => random_int(1, 10),
-            'user_id' => rand(1,2),
-            'active' => rand(1,0)
+            'tags' => json_encode(['post','sport','php'])
         ];
     }
 }

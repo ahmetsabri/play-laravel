@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        // after multiple, default ts
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('orders');
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

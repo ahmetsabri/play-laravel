@@ -66,6 +66,11 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
+            'dump' => [
+                'dump_binary_path' => '/Users/Shared/DBngin/mysql/8.0.27/bin',
+                'use_single_transaction',
+                'timeout' => 60 * 5,
+            ],
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
